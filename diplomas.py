@@ -4,11 +4,12 @@ import os
 import subprocess
 
 conexion = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="22079595",
-    database="goose_talent"
-)
+   host="turntable.proxy.rlwy.net",
+   port=57359,
+   user="root",
+   password="TU_PASSWORD",
+   database="railway"
+   )
 
 cursor = conexion.cursor(dictionary=True)
 
