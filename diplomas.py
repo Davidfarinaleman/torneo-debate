@@ -42,7 +42,7 @@ for p in debatientes:
     doc.save(f"diplomas/{archivo}")
     convertir_pdf(archivo)
 
-cursor.execute("SELECT tutor AS nombre_for, tutor_dni FROM equipos")
+cursor.execute("SELECT tutor AS nombre_for, tutor_dni, centro FROM equipos")
 formadores = cursor.fetchall()
 
 vistos = set()
@@ -56,7 +56,8 @@ for f in formadores:
 
     context = {
         "nombre_for": f["nombre_for"],
-        "dni_for": f["tutor_dni"]
+        "dni_for": f["tutor_dni"],
+        "centro": f["centro"]
     }
 
     doc.render(context)
