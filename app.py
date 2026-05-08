@@ -36,7 +36,7 @@ conexion = mysql.connector.connect(
     user=st.secrets["MYSQL_USER"],
     password=st.secrets["MYSQL_PASSWORD"],
     database=st.secrets["MYSQL_DATABASE"]
-)
+))
 
 cursor = conexion.cursor()
 
