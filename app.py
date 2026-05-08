@@ -30,12 +30,13 @@ def validar_dni_nie(documento):
     return False
 
 conexion = mysql.connector.connect(
-    host="turntable.proxy.rlwy.net",
-    port=57359,
-    user="root",
-    password="mDQBhsvygvDruEwqVwWXQJPIfSIkhJbK",
-    database="railway"
-    )
+    conexion = mysql.connector.connect(
+    host=st.secrets["MYSQL_HOST"],
+    port=st.secrets["MYSQL_PORT"],
+    user=st.secrets["MYSQL_USER"],
+    password=st.secrets["MYSQL_PASSWORD"],
+    database=st.secrets["MYSQL_DATABASE"]
+)
 
 cursor = conexion.cursor()
 
