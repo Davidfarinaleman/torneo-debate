@@ -62,7 +62,7 @@ categoria_torneo = st.selectbox(
 st.subheader("Datos del centro")
 
 denominacion = st.text_input("Denominación del centro *")
-domicilio = st.text_input("Domicilio *")
+domicilio = st.text_input("Dirección *")
 localidad = st.text_input("Localidad *")
 provincia = st.text_input("Provincia *")
 codigo_postal = st.text_input("Código postal *")
@@ -214,7 +214,7 @@ if not correo_profesor.strip():
         sql_centro = """
         INSERT INTO centros (
         denominacion,
-        domicilio,
+        direccion,
         localidad,
         provincia,
         codigo_postal,
@@ -225,7 +225,7 @@ if not correo_profesor.strip():
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON DUPLICATE KEY UPDATE
-        domicilio = VALUES(domicilio),
+        direccion = VALUES(direccion),
         localidad = VALUES(localidad),
         provincia = VALUES(provincia),
         codigo_postal = VALUES(codigo_postal),
@@ -236,7 +236,7 @@ if not correo_profesor.strip():
         """
         cursor.execute(sql_centro, (
             denominacion,
-            domicilio,
+            direccion,
             localidad,
             provincia,
             codigo_postal,
