@@ -33,7 +33,7 @@ conexion = mysql.connector.connect(
     host="turntable.proxy.rlwy.net",
     port=57359,
     user="root",
-    password="TU_PASSWORD",
+    password="mDQBhsvygvDruEwqVwWXQJPIfSIkhJbK",
     database="railway"
     )
 
