@@ -102,41 +102,41 @@ with st.form("formulario_inscripcion"):
         )
         miembros = []
         for j in range(num_miembros):
-        st.markdown(f" Integrante {j+1}")
-        nombre = st.text_input(
-                "Nombre y apellidos *",
-                key=f"nombre_{i}_{j}"
-            )
-        dni = st.text_input(
-                "DNI/NIE *",
-                key=f"dni_{i}_{j}"
-            )
-        curso = st.text_input(
-                "Curso *",
-                key=f"curso_{i}_{j}"
-            )
-        mail = st.text_input(
-                    "Correo electrónico",
-                    key=f"mail_{i}_{j}"
-            )
-        rol = st.selectbox(
-                "Rol *",
-                ["Alumno", "Capitán", "Suplente"],
-                key=f"rol_{i}_{j}"
-            ) 
-        miembros.append({
-                "numero_participante": j + 1,
-                "nombre": nombre,
-                "dni": dni,
-                "curso": curso,
-                "mail": mail,
-                "rol": rol
+            st.markdown(f" Integrante {j+1}")
+            nombre = st.text_input(
+                    "Nombre y apellidos *",
+                    key=f"nombre_{i}_{j}"
+                )
+            dni = st.text_input(
+                    "DNI/NIE *",
+                    key=f"dni_{i}_{j}"
+                )
+            curso = st.text_input(
+                    "Curso *",
+                    key=f"curso_{i}_{j}"
+                )
+            mail = st.text_input(
+                        "Correo electrónico",
+                        key=f"mail_{i}_{j}"
+                )
+            rol = st.selectbox(
+                    "Rol *",
+                    ["Alumno", "Capitán", "Suplente"],
+                    key=f"rol_{i}_{j}"
+                ) 
+            miembros.append({
+                    "numero_participante": j + 1,
+                    "nombre": nombre,
+                    "dni": dni,
+                    "curso": curso,
+                    "mail": mail,
+                    "rol": rol
+                })
+            equipos.append({
+                "numero_equipo": i + 1,
+                "nombre_equipo": nombre_equipo,
+                "miembros": miembros
             })
-        equipos.append({
-            "numero_equipo": i + 1,
-            "nombre_equipo": nombre_equipo,
-            "miembros": miembros
-        })
 
 if st.form_submit_button("Enviar solicitud"):
     if not denominacion.strip():
