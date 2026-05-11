@@ -3,6 +3,7 @@ import mysql.connector
 import re
 
 def validar_dni_nie(documento):
+    dni = dni.upper()
 
     documento = documento.strip().upper()
     patron_dni = r'^\d{8}[A-Z]$'
