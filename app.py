@@ -137,7 +137,7 @@ for i in range(num_equipos):
         "nombre_equipo": nombre_equipo,
         "miembros": miembros
     })
-
+st.write(localidad)
 if st.button("Enviar solicitud"):
     if not denominacion.strip():
         st.error("La denominación del centro es obligatoria")
