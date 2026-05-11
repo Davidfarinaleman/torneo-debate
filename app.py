@@ -143,53 +143,53 @@ if st.button("Enviar solicitud"):
         st.error("La denominación del centro es obligatoria")
         st.stop()
 
-if not localidad.strip():
-    st.error("La localidad es obligatoria")
-    st.stop()
+    if not localidad.strip():
+        st.error("La localidad es obligatoria")
+        st.stop()
 
-if not provincia.strip():
-    st.error("La provincia es obligatoria")
-    st.stop()
+    if not provincia.strip():
+        st.error("La provincia es obligatoria")
+        st.stop()
+        
+    if not telefono_centro.strip():
+        st.error("El teléfono del centro es obligatorio")
+        st.stop()
+        
+    if not correo_centro.strip():
+        st.error("El correo del centro es obligatorio")
+        st.stop()
+            
+    if not director.strip():
+        st.error("El director del centro es obligatorio")
+        st.stop()
+            
+    if not profesor.strip():
+        st.error("El profesor preparador es obligatorio")
+        st.stop()
 
-if not telefono_centro.strip():
-    st.error("El teléfono del centro es obligatorio")
-    st.stop()
+    if not dni_profesor.strip():
+        st.error("El DNI/NIE del profesor es obligatorio")
+        st.stop()
 
-if not correo_centro.strip():
-    st.error("El correo del centro es obligatorio")
-    st.stop()
+    if not validar_dni_nie(dni_profesor):
+        st.error("El DNI/NIE del profesor no es válido")
+        st.stop()
 
-if not director.strip():
-    st.error("El director del centro es obligatorio")
-    st.stop()
+    if not telefono_profesor.strip():
+        st.error("El teléfono del profesor es obligatorio")
+        st.stop()
 
-if not profesor.strip():
-    st.error("El profesor preparador es obligatorio")
-    st.stop()
-
-if not dni_profesor.strip():
-    st.error("El DNI/NIE del profesor es obligatorio")
-    st.stop()
-
-if not validar_dni_nie(dni_profesor):
-    st.error("El DNI/NIE del profesor no es válido")
-    st.stop()
-
-if not telefono_profesor.strip():
-    st.error("El teléfono del profesor es obligatorio")
-    st.stop()
-
-if not correo_profesor.strip():
-    st.error("El correo del profesor es obligatorio")
-    st.stop()
+    if not correo_profesor.strip():
+        st.error("El correo del profesor es obligatorio")
+        st.stop()
     if not dni_profesor.strip():
         st.error("El DNI/NIE del profesor es obligatorio")
         st.stop()
     if not validar_dni_nie(dni_profesor):
-            st.error("El DNI/NIE del profesor no es válido")
-    st.stop()
-    st.error("El DNI/NIE del profesor es obligatorio")
-    st.stop()
+        st.error("El DNI/NIE del profesor no es válido")
+        st.stop()
+        st.error("El DNI/NIE del profesor es obligatorio")
+        st.stop()
 
     sql_torneo = """
     INSERT INTO torneos (nombre)
