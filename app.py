@@ -64,7 +64,6 @@ st.subheader("Datos del centro")
 denominacion = st.text_input("Denominación del centro *")
 domicilio = st.text_input("Dirección *")
 localidad = st.text_input("Localidad *")
-st.write(localidad)
 provincia = st.text_input("Provincia *")
 codigo_postal = st.text_input("Código postal *")
 telefono_centro = st.text_input("Teléfono *")
@@ -139,7 +138,7 @@ for i in range(num_equipos):
         "miembros": miembros
     })
 
-if st.button("Enviar solicitud"):
+if st.form_submit_button("Enviar solicitud"):
     if not denominacion.strip():
         st.error("La denominación del centro es obligatoria")
         st.stop()
