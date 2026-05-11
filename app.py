@@ -47,98 +47,98 @@ st.markdown(
     "<span style='color:red'>*</span> Campos obligatorios",
     unsafe_allow_html=True
 )
+with st.form("formulario_inscripcion"):
+    st.subheader("Datos del torneo")
 
-st.subheader("Datos del torneo")
+    torneo = st.selectbox(
+        "Nombre del torneo", ["Torneo 1", "Torneo 2", "Torneo 3"]
+        )
 
-torneo = st.selectbox(
-    "Nombre del torneo", ["Torneo 1", "Torneo 2", "Torneo 3"]
+    categoria_torneo = st.selectbox(
+        "Categoría",
+        ["ESO", "Bachillerato", "Universidad"]
     )
 
-categoria_torneo = st.selectbox(
-    "Categoría",
-    ["ESO", "Bachillerato", "Universidad"]
-)
+    st.subheader("Datos del centro")
 
-st.subheader("Datos del centro")
+    denominacion = st.text_input("Denominación del centro *")
+    direccion = st.text_input("Dirección *")
+    localidad = st.text_input("Localidad *", key="localidad_centro")
+    provincia = st.text_input("Provincia *")
+    codigo_postal = st.text_input("Código postal *")
+    telefono_centro = st.text_input("Teléfono *")
+    correo_centro = st.text_input("Correo electrónico *")
+    director = st.text_input("Director del centro *")
+    redes = st.text_input("Redes sociales")
 
-denominacion = st.text_input("Denominación del centro *")
-direccion = st.text_input("Dirección *")
-localidad = st.text_input("Localidad *", key="localidad_centro")
-provincia = st.text_input("Provincia *")
-codigo_postal = st.text_input("Código postal *")
-telefono_centro = st.text_input("Teléfono *")
-correo_centro = st.text_input("Correo electrónico *")
-director = st.text_input("Director del centro *")
-redes = st.text_input("Redes sociales")
+    st.subheader("Datos de la convocatoria")
 
-st.subheader("Datos de la convocatoria")
+    profesor = st.text_input("Profesor preparador *")
+    dni_profesor = st.text_input("DNI/NIE *")
+    telefono_profesor = st.text_input("Teléfono del profesor *")
+    correo_profesor = st.text_input("Correo electrónico del profesor *")
 
-profesor = st.text_input("Profesor preparador *")
-dni_profesor = st.text_input("DNI/NIE *")
-telefono_profesor = st.text_input("Teléfono del profesor *")
-correo_profesor = st.text_input("Correo electrónico del profesor *")
-
-st.subheader("Equipos participantes")
-num_equipos = st.number_input(
-    "Número de equipos",
-    min_value=1,
-    max_value=3,
-    step=1
-)
-equipos = []
-for i in range(num_equipos):
-    st.markdown("---")
-    st.markdown(f"## Equipo {i+1}")
-    nombre_equipo = st.text_input(
-        "Nombre del equipo *",
-        key=f"equipo_{i}"
-    )
-    num_miembros = st.number_input(
-        "Número de integrantes *",
+    st.subheader("Equipos participantes")
+    num_equipos = st.number_input(
+        "Número de equipos",
         min_value=1,
-        max_value=5,
-        step=1,
-        key=f"miembros_{i}"
+        max_value=3,
+        step=1
     )
-    miembros = []
-    for j in range(num_miembros):
-       st.markdown(f" Integrante {j+1}")
-       nombre = st.text_input(
-            "Nombre y apellidos *",
-            key=f"nombre_{i}_{j}"
+    equipos = []
+    for i in range(num_equipos):
+        st.markdown("---")
+        st.markdown(f"## Equipo {i+1}")
+        nombre_equipo = st.text_input(
+            "Nombre del equipo *",
+            key=f"equipo_{i}"
         )
-       dni = st.text_input(
-            "DNI/NIE *",
-            key=f"dni_{i}_{j}"
+        num_miembros = st.number_input(
+            "Número de integrantes *",
+            min_value=1,
+            max_value=5,
+            step=1,
+            key=f"miembros_{i}"
         )
-       curso = st.text_input(
-            "Curso *",
-            key=f"curso_{i}_{j}"
-        )
-       mail = st.text_input(
-                "Correo electrónico",
-                key=f"mail_{i}_{j}"
-          )
-       rol = st.selectbox(
-            "Rol *",
-            ["Alumno", "Capitán", "Suplente"],
-            key=f"rol_{i}_{j}"
-        ) 
-    miembros.append({
-            "numero_participante": j + 1,
-            "nombre": nombre,
-            "dni": dni,
-            "curso": curso,
-            "mail": mail,
-            "rol": rol
+        miembros = []
+        for j in range(num_miembros):
+        st.markdown(f" Integrante {j+1}")
+        nombre = st.text_input(
+                "Nombre y apellidos *",
+                key=f"nombre_{i}_{j}"
+            )
+        dni = st.text_input(
+                "DNI/NIE *",
+                key=f"dni_{i}_{j}"
+            )
+        curso = st.text_input(
+                "Curso *",
+                key=f"curso_{i}_{j}"
+            )
+        mail = st.text_input(
+                    "Correo electrónico",
+                    key=f"mail_{i}_{j}"
+            )
+        rol = st.selectbox(
+                "Rol *",
+                ["Alumno", "Capitán", "Suplente"],
+                key=f"rol_{i}_{j}"
+            ) 
+        miembros.append({
+                "numero_participante": j + 1,
+                "nombre": nombre,
+                "dni": dni,
+                "curso": curso,
+                "mail": mail,
+                "rol": rol
+            })
+        equipos.append({
+            "numero_equipo": i + 1,
+            "nombre_equipo": nombre_equipo,
+            "miembros": miembros
         })
-    equipos.append({
-        "numero_equipo": i + 1,
-        "nombre_equipo": nombre_equipo,
-        "miembros": miembros
-    })
 
-if st.button("Enviar solicitud"):
+if st.form_submit_button("Enviar solicitud"):
     if not denominacion.strip():
         st.error("La denominación del centro es obligatoria")
         st.stop()
