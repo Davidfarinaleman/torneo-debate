@@ -138,209 +138,209 @@ with st.form("formulario_inscripcion"):
                 "miembros": miembros
             })
 
-if st.form_submit_button("Enviar solicitud"):
-    if not denominacion.strip():
-        st.error("La denominación del centro es obligatoria")
-        st.stop()
-
-    if not localidad.strip():
-        st.error("La localidad es obligatoria")
-        st.stop()
-
-    if not provincia.strip():
-        st.error("La provincia es obligatoria")
-        st.stop()
-        
-    if not telefono_centro.strip():
-        st.error("El teléfono del centro es obligatorio")
-        st.stop()
-        
-    if not correo_centro.strip():
-        st.error("El correo del centro es obligatorio")
-        st.stop()
-            
-    if not director.strip():
-        st.error("El director del centro es obligatorio")
-        st.stop()
-            
-    if not profesor.strip():
-        st.error("El profesor preparador es obligatorio")
-        st.stop()
-
-    if not dni_profesor.strip():
-        st.error("El DNI/NIE del profesor es obligatorio")
-        st.stop()
-
-    if not validar_dni_nie(dni_profesor):
-        st.error("El DNI/NIE del profesor no es válido")
-        st.stop()
-
-    if not telefono_profesor.strip():
-        st.error("El teléfono del profesor es obligatorio")
-        st.stop()
-
-    if not correo_profesor.strip():
-        st.error("El correo del profesor es obligatorio")
-        st.stop()
-    if not dni_profesor.strip():
-        st.error("El DNI/NIE del profesor es obligatorio")
-        st.stop()
-    if not validar_dni_nie(dni_profesor):
-        st.error("El DNI/NIE del profesor no es válido")
-        st.stop()
-        st.error("El DNI/NIE del profesor es obligatorio")
-        st.stop()
-
-    sql_torneo = """
-    INSERT INTO torneos (nombre)
-    VALUES (%s)
-    ON DUPLICATE KEY UPDATE
-    nombre = VALUES(nombre)
-    """
-    cursor.execute(sql_torneo, (torneo,))
-    conexion.commit()
-    cursor.execute("SELECT id FROM torneos WHERE nombre = %s", (torneo,))
-    torneo_id = cursor.fetchone()[0]
-    for equipo in equipos:
-        if not equipo["nombre_equipo"].strip():
-            st.error("Todos los equipos deben tener nombre")
+    if st.form_submit_button("Enviar solicitud"):
+        if not denominacion.strip():
+            st.error("La denominación del centro es obligatoria")
             st.stop()
-        if len(equipo["miembros"]) == 0:
-            st.error(
-            f"El equipo {equipo['nombre_equipo']} no tiene participantes"
-        )
-        st.stop()
-        
-        sql_centro = """
-        INSERT INTO centros (
-        denominacion,
-        direccion,
-        localidad,
-        provincia,
-        codigo_postal,
-        telefono,
-        correo,
-        director,
-        redes_sociales
-        )
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+
+        if not localidad.strip():
+            st.error("La localidad es obligatoria")
+            st.stop()
+
+        if not provincia.strip():
+            st.error("La provincia es obligatoria")
+            st.stop()
+            
+        if not telefono_centro.strip():
+            st.error("El teléfono del centro es obligatorio")
+            st.stop()
+            
+        if not correo_centro.strip():
+            st.error("El correo del centro es obligatorio")
+            st.stop()
+                
+        if not director.strip():
+            st.error("El director del centro es obligatorio")
+            st.stop()
+                
+        if not profesor.strip():
+            st.error("El profesor preparador es obligatorio")
+            st.stop()
+
+        if not dni_profesor.strip():
+            st.error("El DNI/NIE del profesor es obligatorio")
+            st.stop()
+
+        if not validar_dni_nie(dni_profesor):
+            st.error("El DNI/NIE del profesor no es válido")
+            st.stop()
+
+        if not telefono_profesor.strip():
+            st.error("El teléfono del profesor es obligatorio")
+            st.stop()
+
+        if not correo_profesor.strip():
+            st.error("El correo del profesor es obligatorio")
+            st.stop()
+        if not dni_profesor.strip():
+            st.error("El DNI/NIE del profesor es obligatorio")
+            st.stop()
+        if not validar_dni_nie(dni_profesor):
+            st.error("El DNI/NIE del profesor no es válido")
+            st.stop()
+            st.error("El DNI/NIE del profesor es obligatorio")
+            st.stop()
+
+        sql_torneo = """
+        INSERT INTO torneos (nombre)
+        VALUES (%s)
         ON DUPLICATE KEY UPDATE
-        direccion = VALUES(direccion),
-        localidad = VALUES(localidad),
-        provincia = VALUES(provincia),
-        codigo_postal = VALUES(codigo_postal),
-        telefono = VALUES(telefono),
-        correo = VALUES(correo),
-        director = VALUES(director),
-        redes_sociales = VALUES(redes_sociales)
+        nombre = VALUES(nombre)
         """
-        cursor.execute(sql_centro, (
+        cursor.execute(sql_torneo, (torneo,))
+        conexion.commit()
+        cursor.execute("SELECT id FROM torneos WHERE nombre = %s", (torneo,))
+        torneo_id = cursor.fetchone()[0]
+        for equipo in equipos:
+            if not equipo["nombre_equipo"].strip():
+                st.error("Todos los equipos deben tener nombre")
+                st.stop()
+            if len(equipo["miembros"]) == 0:
+                st.error(
+                f"El equipo {equipo['nombre_equipo']} no tiene participantes"
+            )
+            st.stop()
+            
+            sql_centro = """
+            INSERT INTO centros (
             denominacion,
             direccion,
             localidad,
             provincia,
             codigo_postal,
-            telefono_centro,
-            correo_centro,
+            telefono,
+            correo,
             director,
-            redes
+            redes_sociales
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+            direccion = VALUES(direccion),
+            localidad = VALUES(localidad),
+            provincia = VALUES(provincia),
+            codigo_postal = VALUES(codigo_postal),
+            telefono = VALUES(telefono),
+            correo = VALUES(correo),
+            director = VALUES(director),
+            redes_sociales = VALUES(redes_sociales)
+            """
+            cursor.execute(sql_centro, (
+                denominacion,
+                direccion,
+                localidad,
+                provincia,
+                codigo_postal,
+                telefono_centro,
+                correo_centro,
+                director,
+                redes
+                ))
+            conexion.commit()
+            cursor.execute(
+                "SELECT id FROM centros WHERE denominacion = %s",
+                (denominacion,)
+                )
+            centro_id = cursor.fetchone()[0]
+        
+            sql_equipo = """
+            INSERT INTO equipos (torneo_id,numero_equipo,centro, tutor, nombre_equipo, tutor_dni)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE 
+            nombre_equipo = VALUES(nombre_equipo),
+            centro = VALUES(centro),
+            tutor = VALUES(tutor)
+            """
+            cursor.execute(sql_equipo, (
+                torneo_id,
+                equipo["numero_equipo"],
+                denominacion,
+                profesor,
+                equipo["nombre_equipo"],
+                dni_profesor
             ))
-        conexion.commit()
-        cursor.execute(
-             "SELECT id FROM centros WHERE denominacion = %s",
-             (denominacion,)
-             )
-        centro_id = cursor.fetchone()[0]
-       
-        sql_equipo = """
-        INSERT INTO equipos (torneo_id,numero_equipo,centro, tutor, nombre_equipo, tutor_dni)
-        VALUES (%s, %s, %s, %s, %s, %s)
-        ON DUPLICATE KEY UPDATE 
-        nombre_equipo = VALUES(nombre_equipo),
-        centro = VALUES(centro),
-        tutor = VALUES(tutor)
-        """
-        cursor.execute(sql_equipo, (
-            torneo_id,
-            equipo["numero_equipo"],
-            denominacion,
-            profesor,
-            equipo["nombre_equipo"],
-            dni_profesor
-        ))
-        conexion.commit()
-        cursor.execute("""
-                       SELECT id
-                       FROM equipos
-                       WHERE torneo_id = %s
-                       AND numero_equipo = %s
-                       """, (torneo_id,equipo["numero_equipo"]))
-        equipo_id = cursor.fetchone()[0]
-        for miembro in equipo["miembros"]:
-            if not miembro["nombre"].strip():
-                st.error("Todos los participantes deben tener nombre")
-                st.stop()
+            conexion.commit()
+            cursor.execute("""
+                        SELECT id
+                        FROM equipos
+                        WHERE torneo_id = %s
+                        AND numero_equipo = %s
+                        """, (torneo_id,equipo["numero_equipo"]))
+            equipo_id = cursor.fetchone()[0]
+            for miembro in equipo["miembros"]:
+                if not miembro["nombre"].strip():
+                    st.error("Todos los participantes deben tener nombre")
+                    st.stop()
+                    if not miembro["dni"].strip():
+                        st.error("Todos los participantes deben tener DNI/NIE")
+                        st.stop()
+                        if not validar_dni_nie(miembro["dni"]):
+                            st.error(
+                                f"El DNI/NIE de {miembro['nombre']} no es válido"
+                                )
+                            st.stop()
+                            if not miembro["curso"].strip():
+                                st.error(
+                                    f"El participante {miembro['nombre']} debe tener curso"
+                                    )
+                                st.stop()
                 if not miembro["dni"].strip():
                     st.error("Todos los participantes deben tener DNI/NIE")
                     st.stop()
-                    if not validar_dni_nie(miembro["dni"]):
-                        st.error(
-                            f"El DNI/NIE de {miembro['nombre']} no es válido"
-                              )
-                        st.stop()
-                        if not miembro["curso"].strip():
-                            st.error(
-                                f"El participante {miembro['nombre']} debe tener curso"
-                                )
-                            st.stop()
-            if not miembro["dni"].strip():
-                st.error("Todos los participantes deben tener DNI/NIE")
-                st.stop()
-            if not validar_dni_nie(miembro["dni"]):
-                st.error(
-                    f"El DNI/NIE de {miembro['nombre']} no es válido"
-                    )
-                st.stop()
-            nombre_completo = miembro["nombre"].split(" ", 1)
-            nombre = nombre_completo[0]
-            if len(nombre_completo) > 1:
-                apellidos = nombre_completo[1]
-            else:
-                apellidos = ""
-            sql_debatiente = """
-            INSERT INTO debatientes (
-                equipo_id,
-                numero_participante,
-                nombre,
-                apellidos,
-                dni,
-                curso,
-                correo,
-                rol
-            )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            ON DUPLICATE KEY UPDATE
-            nombre = VALUES(nombre),
-            apellidos = VALUES(apellidos),
-            dni = VALUES(dni),
-            curso = VALUES(curso),
-            correo = VALUES(correo),
-            rol = VALUES(rol)
-            """
-            valores = (
-                equipo_id,
-                miembro["numero_participante"],
-                nombre,
-                apellidos,
-                miembro["dni"],
-                miembro["curso"],
-                miembro["mail"],
-                miembro["rol"]
-            )
-            cursor.execute(sql_debatiente, valores)
+                if not validar_dni_nie(miembro["dni"]):
+                    st.error(
+                        f"El DNI/NIE de {miembro['nombre']} no es válido"
+                        )
+                    st.stop()
+                nombre_completo = miembro["nombre"].split(" ", 1)
+                nombre = nombre_completo[0]
+                if len(nombre_completo) > 1:
+                    apellidos = nombre_completo[1]
+                else:
+                    apellidos = ""
+                sql_debatiente = """
+                INSERT INTO debatientes (
+                    equipo_id,
+                    numero_participante,
+                    nombre,
+                    apellidos,
+                    dni,
+                    curso,
+                    correo,
+                    rol
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ON DUPLICATE KEY UPDATE
+                nombre = VALUES(nombre),
+                apellidos = VALUES(apellidos),
+                dni = VALUES(dni),
+                curso = VALUES(curso),
+                correo = VALUES(correo),
+                rol = VALUES(rol)
+                """
+                valores = (
+                    equipo_id,
+                    miembro["numero_participante"],
+                    nombre,
+                    apellidos,
+                    miembro["dni"],
+                    miembro["curso"],
+                    miembro["mail"],
+                    miembro["rol"]
+                )
+                cursor.execute(sql_debatiente, valores)
 
-    conexion.commit()
-    cursor.close()
-    conexion.close()
+        conexion.commit()
+        cursor.close()
+        conexion.close()
 
-    st.success("Inscripción enviada correctamente")
+        st.success("Inscripción enviada correctamente")
