@@ -143,11 +143,11 @@ if st.button("Enviar solicitud"):
         st.error("La denominación del centro es obligatoria")
         st.stop()
 
-    if False:
+    if not localidad:
         st.error("La localidad es obligatoria")
         st.stop()
 
-    if not provincia.strip():
+    if not provincia:
         st.error("La provincia es obligatoria")
         st.stop()
         
