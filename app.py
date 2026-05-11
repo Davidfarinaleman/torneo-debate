@@ -207,9 +207,8 @@ with st.form("formulario_inscripcion"):
                 st.stop()
             if len(equipo["miembros"]) == 0:
                 st.error(
-                f"El equipo {equipo['nombre_equipo']} no tiene participantes"
-            )
-            st.stop()
+                f"El equipo {equipo['nombre_equipo']} no tiene participantes")
+                st.stop()
             
             sql_centro = """
             INSERT INTO centros (
