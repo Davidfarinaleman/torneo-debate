@@ -62,7 +62,7 @@ categoria_torneo = st.selectbox(
 st.subheader("Datos del centro")
 
 denominacion = st.text_input("Denominación del centro *")
-domicilio = st.text_input("Dirección *")
+direccion = st.text_input("Dirección *")
 localidad = st.text_input("Localidad *", key="localidad_centro")
 provincia = st.text_input("Provincia *")
 codigo_postal = st.text_input("Código postal *")
@@ -143,11 +143,11 @@ if st.button("Enviar solicitud"):
         st.error("La denominación del centro es obligatoria")
         st.stop()
 
-    if not localidad:
+    if not localidad.strip():
         st.error("La localidad es obligatoria")
         st.stop()
 
-    if not provincia:
+    if not provincia.strip():
         st.error("La provincia es obligatoria")
         st.stop()
         
