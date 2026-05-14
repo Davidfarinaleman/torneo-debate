@@ -65,10 +65,46 @@ with st.form("formulario_inscripcion"):
     
     st.subheader("Datos de la convocatoria")
 
-    profesor = st.text_input("Profesor preparador *")
-    dni_profesor = st.text_input("DNI/NIE *")
-    telefono_profesor = st.text_input("Teléfono del profesor *")
-    correo_profesor = st.text_input("Correo electrónico del profesor *")
+    num_profesores = st.number_input(
+    "Número de profesores",
+    min_value=1,
+    max_value=10,
+    value=1,
+    step=1
+    )
+
+    profesores = []
+
+    for i in range(num_profesores):
+
+        st.markdown(f"### Profesor {i+1}")
+
+        profesor = st.text_input(
+            "Profesor preparador *",
+            key=f"profesor_{i}"
+        )
+
+        dni_profesor = st.text_input(
+            "DNI/NIE *",
+            key=f"dni_profesor_{i}"
+        )
+
+        telefono_profesor = st.text_input(
+            "Teléfono del profesor *",
+            key=f"telefono_profesor_{i}"
+        )
+
+        correo_profesor = st.text_input(
+            "Correo electrónico del profesor *",
+            key=f"correo_profesor_{i}"
+        )
+
+        profesores.append({
+            "nombre": profesor,
+            "dni": dni_profesor,
+            "telefono": telefono_profesor,
+            "correo": correo_profesor
+        })
 
     st.subheader("Equipos participantes")
     num_equipos = st.number_input(
@@ -154,34 +190,29 @@ with st.form("formulario_inscripcion"):
         if not director.strip():
             st.error("El director del centro es obligatorio")
             st.stop()
-                
-        if not profesor.strip():
-            st.error("El profesor preparador es obligatorio")
-            st.stop()
+        for profesor_data in profesores:
 
-        if not dni_profesor.strip():
-            st.error("El DNI/NIE del profesor es obligatorio")
-            st.stop()
+            if not profesor_data["nombre"].strip():
+                st.error("El profesor preparador es obligatorio")
+                st.stop()
 
-        if not validar_dni_nie(dni_profesor):
-            st.error("El DNI/NIE del profesor no es válido")
-            st.stop()
+            if not profesor_data["dni"].strip():
+                st.error("El DNI/NIE del profesor es obligatorio")
+                st.stop()
 
-        if not telefono_profesor.strip():
-            st.error("El teléfono del profesor es obligatorio")
-            st.stop()
+            if not validar_dni_nie(profesor_data["dni"]):
+                st.error(
+                    f"El DNI/NIE del profesor {profesor_data['nombre']} no es válido"
+                )
+                st.stop()
 
-        if not correo_profesor.strip():
-            st.error("El correo del profesor es obligatorio")
-            st.stop()
-        if not dni_profesor.strip():
-            st.error("El DNI/NIE del profesor es obligatorio")
-            st.stop()
-        if not validar_dni_nie(dni_profesor):
-            st.error("El DNI/NIE del profesor no es válido")
-            st.stop()
-            st.error("El DNI/NIE del profesor es obligatorio")
-            st.stop()
+            if not profesor_data["telefono"].strip():
+                st.error("El teléfono del profesor es obligatorio")
+                st.stop()
+
+            if not profesor_data["correo"].strip():
+                st.error("El correo del profesor es obligatorio")
+                st.stop()
 
         sql_torneo = """
         INSERT INTO torneos (nombre)
@@ -252,10 +283,12 @@ with st.form("formulario_inscripcion"):
                 torneo_id,
                 equipo["numero_equipo"],
                 denominacion,
-                profesor,
+                profesores[0]["nombre"],
                 equipo["nombre_equipo"],
-                dni_profesor
+                profesores[0]["dni"]
             ))
+   
+
             conexion.commit()
             cursor.execute("""
                         SELECT id
