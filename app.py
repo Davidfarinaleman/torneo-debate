@@ -39,8 +39,9 @@ conexion = mysql.connector.connect(
 
 cursor = conexion.cursor()
 
-st.image("logo.png", width=180)
-
+col1, col2, col3 = st.columns([1,2,1])
+with col2:
+    st.image("logo.png", width=200)
 st.title("Sistema de Inscripción de Torneos")
 
 st.markdown(
@@ -50,14 +51,7 @@ st.markdown(
 with st.form("formulario_inscripcion"):
     st.subheader("Datos del torneo")
 
-    torneo = st.selectbox(
-        "Nombre del torneo", ["Torneo 1", "Torneo 2", "Torneo 3"]
-        )
-
-    categoria_torneo = st.selectbox(
-        "Categoría",
-        ["ESO", "Bachillerato", "Universidad"]
-    )
+    torneo = st.text_input("I Competición de Debate Escolar JMD CHAMBERI *")
 
     st.subheader("Datos del centro")
 
@@ -69,8 +63,7 @@ with st.form("formulario_inscripcion"):
     telefono_centro = st.text_input("Teléfono *")
     correo_centro = st.text_input("Correo electrónico *")
     director = st.text_input("Director del centro *")
-    redes = st.text_input("Redes sociales")
-
+    
     st.subheader("Datos de la convocatoria")
 
     profesor = st.text_input("Profesor preparador *")
@@ -121,7 +114,7 @@ with st.form("formulario_inscripcion"):
                 )
             rol = st.selectbox(
                     "Rol *",
-                    ["Alumno", "Capitán", "Suplente"],
+                    ["Debatiente", "Capitán", "Suplente"],
                     key=f"rol_{i}_{j}"
                 ) 
             miembros.append({
@@ -220,7 +213,6 @@ with st.form("formulario_inscripcion"):
             telefono,
             correo,
             director,
-            redes_sociales
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
@@ -231,7 +223,6 @@ with st.form("formulario_inscripcion"):
             telefono = VALUES(telefono),
             correo = VALUES(correo),
             director = VALUES(director),
-            redes_sociales = VALUES(redes_sociales)
             """
             cursor.execute(sql_centro, (
                 denominacion,
@@ -242,7 +233,6 @@ with st.form("formulario_inscripcion"):
                 telefono_centro,
                 correo_centro,
                 director,
-                redes
                 ))
             conexion.commit()
             cursor.execute(
