@@ -49,9 +49,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 with st.form("formulario_inscripcion"):
-    st.subheader("Datos del torneo")
-
-    torneo = st.text_input("I Competición de Debate Escolar JMD CHAMBERI *")
+    
+    torneo = st.subheader("I Competición de Debate Escolar JMD CHAMBERI *")
 
     st.subheader("Datos del centro")
 
