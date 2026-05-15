@@ -165,8 +165,17 @@ with st.form("formulario_inscripcion"):
                 "nombre_equipo": nombre_equipo,
                 "miembros": miembros
             })
+    st.markdown(
+        "[📄 Consultar política de privacidad](politica_privacidad.pdf)"
+            )
+    privacidad = st.checkbox(
+        "He leído y acepto la política de privacidad y el tratamiento de datos personales *"
+        )
 
     if st.form_submit_button("Enviar solicitud"):
+        if not privacidad:
+            st.error("Debes aceptar la política de privacidad")
+            st.stop()
         if not denominacion.strip():
             st.error("La denominación del centro es obligatoria")
             st.stop()
