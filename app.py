@@ -50,7 +50,7 @@ st.markdown(
 )
 with st.form("formulario_inscripcion"):
     
-    torneo = st.subheader("I Competición de Debate Escolar JMD CHAMBERI *")
+    torneo = st.subheader("II Competición de Debate Escolar JMD CHAMBERI *")
 
     st.subheader("Datos del centro")
 
