@@ -68,7 +68,7 @@ with st.form("formulario_inscripcion"):
     num_profesores = st.number_input(
     "Número de profesores",
     min_value=1,
-    max_value=10,
+    max_value=3,
     value=1,
     step=1
     )
@@ -270,22 +270,48 @@ with st.form("formulario_inscripcion"):
                 (denominacion,)
                 )
             centro_id = cursor.fetchone()[0]
+            for profesor_data in profesores:
+                sql_profesor = """
+                    INSERT INTO profesores (
+                        centro_id,
+                        nombre_centro,
+                        nombre,
+                        dni,
+                        telefono,
+                        correo
+                        )
+                        VALUES (%s, %s, %s, %s, %s, %s)
+
+                    ON DUPLICATE KEY UPDATE
+                        nombre = VALUES(nombre),
+                        telefono = VALUES(telefono),
+                        correo = VALUES(correo),
+                        centro_id = VALUES(centro_id),
+                        nombre_centro = VALUES(nombre_centro)
+                        """
+                cursor.execute(sql_profesor, (
+                    centro_id,
+                    denominacion,
+                    profesor_data["nombre"],
+                    profesor_data["dni"],
+                    profesor_data["telefono"],
+                    profesor_data["correo"]
+                    ))
+                conexion.commit()
         
             sql_equipo = """
-            INSERT INTO equipos (torneo_id,numero_equipo,centro, tutor, nombre_equipo, tutor_dni)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO equipos (torneo_id,numero_equipo,centro, nombre_equipo,centro_id)
+            VALUES (%s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE 
             nombre_equipo = VALUES(nombre_equipo),
             centro = VALUES(centro),
-            tutor = VALUES(tutor)
             """
             cursor.execute(sql_equipo, (
                 torneo_id,
                 equipo["numero_equipo"],
                 denominacion,
-                profesores[0]["nombre"],
                 equipo["nombre_equipo"],
-                profesores[0]["dni"]
+                centro_id,
             ))
    
 
